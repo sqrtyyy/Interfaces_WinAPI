@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1606508981 source:e:\win_programms\codeblocks\projects\loadfiledll\loadfile.c
+	"LoadFile.h"
+	<stdio.h>
+	<malloc.h>
+
+1606508981 e:\win_programms\codeblocks\projects\loadfiledll\loadfile.h
+

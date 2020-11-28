@@ -1,0 +1,33 @@
+# depslib dependency file v1.0
+1606560184 source:e:\win_programms\codeblocks\projects\text_editor\model.c
+	"Model.h"
+	"LoadFile.h"
+
+1606560257 e:\win_programms\codeblocks\projects\text_editor\model.h
+	<windows.h>
+
+1606549013 source:e:\win_programms\codeblocks\projects\text_editor\viewer.c
+	"Viewer.h"
+
+1606543647 e:\win_programms\codeblocks\projects\text_editor\viewer.h
+	<windows.h>
+	"Model.h"
+
+1606549838 source:e:\win_programms\codeblocks\projects\text_editor\main.c
+	<tchar.h>
+	<windows.h>
+	<stdlib.h>
+	<assert.h>
+	"Model.h"
+	"Viewer.h"
+	"Menu.h"
+	"WindowData.h"
+
+1606467296 e:\win_programms\codeblocks\projects\text_editor\menu.h
+
+1606547539 e:\win_programms\codeblocks\projects\text_editor\windowdata.h
+	"Model.h"
+	"Viewer.h"
+
+1606508981 e:\win_programms\codeblocks\projects\text_editor\loadfile.h
+
