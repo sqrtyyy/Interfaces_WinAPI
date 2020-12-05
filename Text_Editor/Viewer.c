@@ -59,8 +59,9 @@ static BOOLEAN SimpleShift(ViewerData * const viewerDataPtr, int shift){
     shift *= viewerDataPtr->linesPerScroll;
     if((viewerDataPtr->currentLineNum + shift > viewerDataPtr->vScrollMax * viewerDataPtr->linesPerScroll && shift > 0) ||
             (int)viewerDataPtr->currentLineNum + shift < 0 || shift == 0) return FALSE;
-    viewerDataPtr->currentLineNum += shift;
-    viewerDataPtr->curPos += shift;
+    int additionalShift = viewerDataPtr->curPos % viewerDataPtr->linesPerScroll;
+    viewerDataPtr->currentLineNum += shift - additionalShift;
+    viewerDataPtr->curPos += shift - additionalShift;
     return TRUE;
 }
 /**
@@ -99,6 +100,12 @@ static BOOLEAN LayOutShift(ViewerData * const viewerDataPtr, int shift){
         viewerDataPtr->curExtraLine = tmpExtraLine;
         viewerDataPtr->curPos = tmpPos;
     }
+    int prevLinesPerScroll = viewerDataPtr->linesPerScroll;
+    viewerDataPtr->linesPerScroll = 1;
+    while (viewerDataPtr->curPos % prevLinesPerScroll != 0){
+        SimpleShift(viewerDataPtr, -1);
+    }
+    viewerDataPtr->linesPerScroll = prevLinesPerScroll;
     return shift == 0;
 }
 /**
@@ -116,12 +123,12 @@ static void SimpleResize(Model const * const modelPtr, ViewerData * const viewer
     CalculateScroll(viewerDataPtr, modelPtr->linesNumber);
     viewerDataPtr->vScrollMax = max(0, (int)viewerDataPtr->vScrollMax - newHeight / viewerDataPtr->cyChar / viewerDataPtr->linesPerScroll);
 
-    int prevLinesPerScroll = viewerDataPtr->linesPerScroll;
+    /*int prevLinesPerScroll = viewerDataPtr->linesPerScroll;
     viewerDataPtr->linesPerScroll = 1;
     while (viewerDataPtr->curPos % prevLinesPerScroll != 0){
         SimpleShift(viewerDataPtr, -1);
     }
-    viewerDataPtr->linesPerScroll = prevLinesPerScroll;
+    viewerDataPtr->linesPerScroll = prevLinesPerScroll;*/
 
     int tmp = viewerDataPtr->currentLineNum;
     viewerDataPtr->currentLineNum = min(viewerDataPtr->currentLineNum, viewerDataPtr->vScrollMax * viewerDataPtr->linesPerScroll);
@@ -164,12 +171,12 @@ static void LayOutResize(Model const * const modelPtr, ViewerData * const viewer
         shiftExtraNewLine(viewerDataPtr);
     }
     CalculateScroll(viewerDataPtr, viewerDataPtr->linesNumberLayOut);
-    int prevLinesPerScroll = viewerDataPtr->linesPerScroll;
+    /*int prevLinesPerScroll = viewerDataPtr->linesPerScroll;
     viewerDataPtr->linesPerScroll = 1;
     while (viewerDataPtr->curPos % prevLinesPerScroll != 0){
         LayOutShift(viewerDataPtr, -1);
     }
-    viewerDataPtr->linesPerScroll = prevLinesPerScroll;
+    viewerDataPtr->linesPerScroll = prevLinesPerScroll;*/
     viewerDataPtr->vScrollMax = max(0, viewerDataPtr->vScrollMax - newHeight / viewerDataPtr->cyChar / viewerDataPtr->linesPerScroll);
     while (viewerDataPtr->curPos / viewerDataPtr->linesPerScroll > viewerDataPtr->vScrollMax){
         LayOutShift(viewerDataPtr, -1);
