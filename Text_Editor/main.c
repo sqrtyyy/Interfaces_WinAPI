@@ -108,7 +108,8 @@ int WINAPI WinMain (HINSTANCE hThisInstance,
 LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     HDC hdc;
-    WindowData_t* windowDataPtr = (WindowData_t*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+
+    WindowData_t* windowDataPtr = (WindowData_t*)GetWindowLongPtr(hwnd, GWL_USERDATA);
     Viewer* viewerPtr = windowDataPtr == NULL ? NULL : windowDataPtr->viewerPtr;
     ViewerData* viewerDataPtr = viewerPtr == NULL ? NULL : viewerPtr->viewerData;
     Model* modelPtr = windowDataPtr == NULL ? NULL : windowDataPtr->modelPtr;
@@ -205,7 +206,7 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
                     RECT rect;
                     if(GetClientRect(hwnd, &rect)) {
                         int height = rect.bottom - rect.top;
-                        deltaLine *=  height / viewerDataPtr->cyChar;
+                        deltaLine *=  height / viewerDataPtr->cyChar / viewerDataPtr->linesPerScroll;
                     }
                     break;
                 }
