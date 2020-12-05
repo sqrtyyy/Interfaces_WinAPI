@@ -109,7 +109,7 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
 {
     HDC hdc;
 
-    WindowData_t* windowDataPtr = (WindowData_t*)GetWindowLongPtr(hwnd, GWL_USERDATA);
+    WindowData_t* windowDataPtr = (WindowData_t*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
     Viewer* viewerPtr = windowDataPtr == NULL ? NULL : windowDataPtr->viewerPtr;
     ViewerData* viewerDataPtr = viewerPtr == NULL ? NULL : viewerPtr->viewerData;
     Model* modelPtr = windowDataPtr == NULL ? NULL : windowDataPtr->modelPtr;
