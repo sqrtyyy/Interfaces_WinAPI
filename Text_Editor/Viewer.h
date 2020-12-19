@@ -34,6 +34,8 @@ typedef struct{
 
     UINT curPos;
 
+    UINT curVPos;
+
     UINT linesNumberLayOut;
 
     UINT curHorizontalShift;
@@ -89,6 +91,7 @@ void ChangeMode(Viewer* viewerPtr, Model const* modelPtr, HWND hwnd);
  */
 
 void DeleteViewer(Viewer* viewerPtr);
+
 
 
 #endif //CLIONPROJECTS_VIEWER_H

@@ -11,7 +11,7 @@
  * @struct string_t
  * @brief String which doesn't ends by 0
  * @field length Length of string
- * @brief string Address of first element of string.
+ * @field string Address of first element of string.
  */
 typedef struct {
     UINT length;

@@ -3,7 +3,7 @@
 	"Model.h"
 	"LoadFile.h"
 
-1606560257 e:\win_programms\codeblocks\projects\text_editor\model.h
+1608356223 e:\win_programms\codeblocks\projects\text_editor\model.h
 	<windows.h>
 
 1607177731 source:e:\win_programms\codeblocks\projects\text_editor\viewer.c
@@ -13,7 +13,7 @@
 	<windows.h>
 	"Model.h"
 
-1606549838 source:e:\win_programms\codeblocks\projects\text_editor\main.c
+1607177888 source:e:\win_programms\codeblocks\projects\text_editor\main.c
 	<tchar.h>
 	<windows.h>
 	<stdlib.h>

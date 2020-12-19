@@ -124,7 +124,7 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
         }
         case WM_CREATE:{
             WindowData_t*  winDataPtr = calloc(1, sizeof(WindowData_t));
-            SetWindowLongPtr(hwnd, GWLP_USERDATA, (LONG) winDataPtr);
+            SetWindowLongPtr(hwnd, GWLP_USERDATA, (LONG_PTR) winDataPtr);
 
             hdc = GetDC(hwnd);
             HFONT hFont = CreateFont(20, 10, 0, 0, FW_NORMAL, FALSE, FALSE, FALSE, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS,
@@ -211,13 +211,17 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
                     break;
                 }
                 case SB_THUMBTRACK:
-                    deltaLine = HIWORD(wParam) - GetScrollPos(hwnd, SB_VERT);
+                    deltaLine = HIWORD(wParam) - viewerDataPtr->curPos / viewerDataPtr->linesPerScroll;
                     break;
             }
 
             if(viewerPtr->changeLine(viewerDataPtr, deltaLine)){
-                ScrollWindow(hwnd, 0,-viewerDataPtr->cyChar * deltaLine * viewerDataPtr->linesPerScroll,
-                             NULL, NULL);
+                if(deltaLine != 0){
+                    ScrollWindow(hwnd, 0,-viewerDataPtr->cyChar * deltaLine * viewerDataPtr->linesPerScroll,
+                                                NULL, NULL);
+                } else{
+                    InvalidateRect(hwnd, NULL, TRUE);
+                }
                 SetScrollPos(hwnd, SB_VERT,  viewerDataPtr->curPos / viewerDataPtr->linesPerScroll, TRUE);
                 UpdateWindow(hwnd);
             }
