@@ -6,14 +6,15 @@
 1608356223 e:\win_programms\codeblocks\projects\text_editor\model.h
 	<windows.h>
 
-1607177731 source:e:\win_programms\codeblocks\projects\text_editor\viewer.c
+1608374492 source:e:\win_programms\codeblocks\projects\text_editor\viewer.c
+	<stdio.h>
 	"Viewer.h"
 
-1606543647 e:\win_programms\codeblocks\projects\text_editor\viewer.h
+1608387893 e:\win_programms\codeblocks\projects\text_editor\viewer.h
 	<windows.h>
 	"Model.h"
 
-1607177888 source:e:\win_programms\codeblocks\projects\text_editor\main.c
+1608939986 source:e:\win_programms\codeblocks\projects\text_editor\main.c
 	<tchar.h>
 	<windows.h>
 	<stdlib.h>

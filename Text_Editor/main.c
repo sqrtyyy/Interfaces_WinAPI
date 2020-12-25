@@ -183,6 +183,28 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
                     SetScrollPos(hwnd, SB_HORZ, viewerDataPtr->curHorizontalShift, TRUE);
                     InvalidateRect(hwnd, NULL, TRUE);
                     break;
+                case VK_PRIOR:
+                    shift = -1;
+                case VK_NEXT: {
+                    shift = shift == -1 ? -1 : 1;
+                    RECT rect;
+                    if(GetClientRect(hwnd, &rect)) {
+                        int height = rect.bottom - rect.top;
+                        shift*=  height / viewerDataPtr->cyChar / viewerDataPtr->linesPerScroll;
+                    }
+                    if(viewerPtr->changeLine(viewerDataPtr, shift)){
+                        if(shift != 0){
+                            ScrollWindow(hwnd, 0,-viewerDataPtr->cyChar * shift * viewerDataPtr->linesPerScroll,
+                                         NULL, NULL);
+                        } else{
+                            InvalidateRect(hwnd, NULL, TRUE);
+                        }
+                        SetScrollPos(hwnd, SB_VERT,  viewerDataPtr->curPos / viewerDataPtr->linesPerScroll, TRUE);
+                        UpdateWindow(hwnd);
+                    }
+                    break;
+                }
+
             }
             UpdateWindow(hwnd);
             break;
@@ -239,6 +261,22 @@ LRESULT CALLBACK WindowProcedure (HWND hwnd, UINT message, WPARAM wParam, LPARAM
                 case SB_LINELEFT:
                     shift = -1;
                     break;
+                case SB_PAGERIGHT: {
+                    RECT rect;
+                    if (GetClientRect(hwnd, &rect)) {
+                        int width = rect.right - rect.left;
+                        shift = width / viewerDataPtr->cxChar;
+                    }
+                    break;
+                }
+                case SB_PAGELEFT: {
+                    RECT rect;
+                    if (GetClientRect(hwnd, &rect)) {
+                        int width = rect.right - rect.left;
+                        shift = -width / viewerDataPtr->cxChar;
+                    }
+                    break;
+                }
                 case SB_THUMBTRACK:
                     shift = HIWORD(wParam) - viewerDataPtr->curHorizontalShift;
                     break;
